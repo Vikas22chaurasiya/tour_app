@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./searchItem.css";
 import StarRatingComponent from "../StarRating/StarRatingComponent";
+import { useNavigate } from "react-router-dom";
 import { useState, useContext} from "react";
 import {
   faHeart
@@ -14,6 +15,7 @@ import axios from "axios";
 const SearchItem = ({ item, change, list, count }) => {
   const { user } = useContext(AuthContext);
  
+  const navigate = useNavigate();
 
   console.log(list);
 
@@ -23,6 +25,7 @@ const SearchItem = ({ item, change, list, count }) => {
   }
 
   const [Fav, setfav] = useState(trick);
+  const [price, setPrice] = useState("");
 
   const handleclick = async () => {
     setfav((prev) => !prev);
@@ -38,11 +41,18 @@ const SearchItem = ({ item, change, list, count }) => {
     } catch (err) {}
   };
 
+  const handlepackage= async ()=>{
+
+    navigate(`/packages/${item._id}`, { state: { count } });
+
+
+  }
+
   return (
     <div className="searchItem">
       <img src={item.img_link} alt="" className="siImg" />
       <div className="siDesc">
-        <h1 className="siTitle">{item.Package_name}</h1>
+        <h1 className="siTitle">{item.Package_name+item.PackageNo}</h1>
 
         <span className="siFeatures destination">
           Destination: <span className="nobold">{item.Destination}</span>
@@ -99,9 +109,10 @@ const SearchItem = ({ item, change, list, count }) => {
             </span>
             <span className="siTaxOp">Includes taxes and fees</span>
           </div>
-          <Link to={`/packages/${item._id}`}>
+          <button className="siCheckButton" onClick={handlepackage}>See availability</button>
+          {/* <Link to={`/packages/${item._id}`}>
             <button className="siCheckButton">See availability</button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

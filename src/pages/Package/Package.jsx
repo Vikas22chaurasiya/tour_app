@@ -278,15 +278,15 @@ const Package = () => {
 							<div className={styles.duration}>
 								<span className={styles.destinations}>{data.Duration}</span>
 								<span className={styles.destinations}>
-									{data.Review_star}
+									{data.Review}
 									<IoIosStar></IoIosStar>
 								</span>
 							</div>
 							<div>
 								Start and end in{" "}
 								<span className={styles.destinations}>
-									{/* <b>{data.Destination.split(",")[0]}</b> */}
-									{/* <b>{data.Destination}</b> */}
+									<b>{data && data.Destination &&  data.Destination.split(",")[0]}</b>
+									
 
 									
 								</span>
@@ -309,7 +309,7 @@ const Package = () => {
 									<span className={styles.detailsText}>{data.Operated_in}</span>
 								</div>
 							</div>
-							<span className={styles.packagePrice}>{data.Price}</span>
+							<span className={styles.packagePrice}>  ₹{data && data.Price && Number(data.Price.replace(/,/g, "") * (location.state.count > 1 ? location.state.count : 1)).toLocaleString()}</span>
 							<button className={styles.bookNow}>Reserve or Book Now!</button>
 						</div>
 					</div>
