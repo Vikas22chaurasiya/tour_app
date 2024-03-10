@@ -3,7 +3,6 @@ import axios from "axios";
 
 const useFetchfav = (url) => {
   const [datalist, setData] = useState([]);
-  const [datafav, setDatafav] = useState([]);
   const [loading1, setLoading] = useState(false);
   const [error, setError] = useState(false);
 

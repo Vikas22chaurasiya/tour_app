@@ -1,6 +1,5 @@
 import {
   faBed,
-  faCalendarDays,
   faPerson,
   faHeart,
   faHome,
@@ -9,11 +8,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
-import { DateRange } from "react-date-range";
 import { useContext, useEffect, useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { format } from "date-fns";
 import { useNavigate, useLocation } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
@@ -78,9 +75,6 @@ const Header = ({ type }) => {
     navigate("/allpackages", { state: { destination, options } });
   };
 
-  const handleDestinationChange = (event) => {
-    setDestination(event.target.value);
-  };
 
   return (
     <div className="header">

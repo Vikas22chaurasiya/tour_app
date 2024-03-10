@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import { json, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
 import { IoIosArrowDown, IoIosArrowUp, IoIosStar } from "react-icons/io";
@@ -185,28 +185,18 @@ const Package = () => {
 	const id = location.pathname.split("/")[2];
 	const [slideNumber, setSlideNumber] = useState(0);
 	const [open, setOpen] = useState(false);
-	const [openModal, setOpenModal] = useState(false);
 
-	const { data, loading, error } = useFetch(`${process.env.REACT_APP_LINK}/packages/find/${id}`);
+	const { data, loading } = useFetch(`${process.env.REACT_APP_LINK}/packages/find/${id}`);
 	console.log(data.days)
 	const { user } = useContext(AuthContext);
 	const navigate = useNavigate();
 
-	const { dates, options } = useContext(SearchContext);
 
-	const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-	function dayDifference(date1, date2) {
-		const timeDiff = Math.abs(date2.getTime() - date1.getTime());
-		const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
-		return diffDays;
-	}
 
-	// const days = dayDifference(dates[0].endDate, dates[0].startDate);
-
-	const handleOpen = (i) => {
-		setSlideNumber(i);
-		setOpen(true);
-	};
+	// const handleOpen = (i) => {
+	// 	setSlideNumber(i);
+	// 	setOpen(true);
+	// };
 
 	const handleMove = (direction) => {
 		let newSlideNumber;
@@ -220,14 +210,7 @@ const Package = () => {
 		setSlideNumber(newSlideNumber);
 	};
 
-	const handleClick = () => {
-		if (user) {
-			setOpenModal(true);
-		} else {
-			navigate("/login");
-		}
-	};
-
+	
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isExpanded1, setIsExpanded1] = useState(false);
 	const [expandedDays, setExpandedDays] = useState({});
@@ -439,7 +422,11 @@ const Package = () => {
 							))}
 						</div>
 					</div>
-					{/* <MailList /> */}
+					<br/>
+					<br/>
+					<br/>
+					<MailList />
+					<br/><br/>
 					<Footer />
 				</div>
 			)}
