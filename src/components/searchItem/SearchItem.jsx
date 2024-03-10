@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import "./searchItem.css";
+import StarRatingComponent from "../StarRating/StarRatingComponent";
 import { useState, useContext, useEffect } from "react";
 import {
   faHeart,
-  faHeartCircleCheck,
-  faL,
+  faStar
+ 
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useFetchfav from "../../hooks/useFetchfav";
@@ -19,7 +20,7 @@ const SearchItem = ({ item, change, list, count }) => {
   console.log(list);
 
   var trick = false;
-  if (list.includes(item.PackageNo)) {
+  if (list.includes(Number(item.PackageNo))) {
     trick = true;
   }
 
@@ -29,10 +30,10 @@ const SearchItem = ({ item, change, list, count }) => {
     setfav((prev) => !prev);
     try {
       if (!Fav) {
-        await axios.post(`/favorites/${user.username}/add/${item.PackageNo}`);
-        console.log(`/favorites/${user.username}/add/${item.PackageNo}`);
+        await axios.post(`${process.env.REACT_APP_LINK}/favorites/${user.username}/add/${item.PackageNo}`);
+        console.log(`${process.env.REACT_APP_LINK}/favorites/${user.username}/add/${item.PackageNo}`);
       } else {
-        await axios.delete(`/favorites/${user.username}/delete/${item.PackageNo}`);
+        await axios.delete(`${process.env.REACT_APP_LINK}/favorites/${user.username}/delete/${item.PackageNo}`);
         change((prev) => prev + 1);
         //window.location.reload(false);
       }
@@ -67,14 +68,17 @@ const SearchItem = ({ item, change, list, count }) => {
       </div>
 
       <div className="siDetails">
-        {item.Reviews_star && (
+        {/* {item.Review && (
           <div className="siRating">
-            <span>Excellent</span>
-            <button>{item.Reviews_star}</button>
-          </div>
-        )}
+             <span><StarRatingComponent  name="rate1"  starCount={5} value={item.Review}
+        /></span>
+         </div>
+        )} */}
         <div className="siDetailTexts">
           <span onClick={handleclick} className="favicon">
+          {item.Review && (
+             <span><StarRatingComponent  name="rate1"  starCount={5} value={item.Review}/>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        )}
             {Fav ? (
               <FontAwesomeIcon
                 icon={faHeart}

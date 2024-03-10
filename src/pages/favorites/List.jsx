@@ -18,7 +18,7 @@ const List = () => {
   const[change,setchange] = useState(0);
 
   const { datalist,reFetch1,loading1 } = useFetchfav(
-    `/favorites/${user.username}/favlist`
+    `${process.env.REACT_APP_LINK}/favorites/${user.username}/favlist`
   );
 
   useEffect(()=>{
@@ -27,7 +27,7 @@ const List = () => {
 
   },[change])
   const { data, loading, error, reFetch } = useFetch(
-    `/favorites/${user.username}`
+    `${process.env.REACT_APP_LINK}/favorites/${user.username}`
   );
 
   const handleClick = () => {

@@ -15,7 +15,6 @@ import useFetch from "../../hooks/useFetch";
 import { json, useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
-import Reserve from "../../components/reserve/Reserve";
 import { IoIosArrowDown, IoIosArrowUp, IoIosStar } from "react-icons/io";
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
@@ -188,7 +187,7 @@ const Package = () => {
 	const [open, setOpen] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
 
-	const { data, loading, error } = useFetch(`/packages/find/${id}`);
+	const { data, loading, error } = useFetch(`${process.env.REACT_APP_LINK}/packages/find/${id}`);
 	console.log(data.days)
 	const { user } = useContext(AuthContext);
 	const navigate = useNavigate();

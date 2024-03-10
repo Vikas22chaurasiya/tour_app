@@ -22,13 +22,13 @@ const List = () => {
   const [max, setMax] = useState(undefined);
 
   const { data, loading, error, reFetch } = useFetch(
-    `/packages?city=${destination}&min=${min || 0 }&max=${max || 999}`
+    `${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0 }&max=${max || 999}`
   );
 
   const { user } = useContext(AuthContext);
 
   const { datalist,reFetch1,loading1 } = useFetchfav(
-    `/favorites/${user.username}/favlist`
+    `${process.env.REACT_APP_LINK}/favorites/${user.username}/favlist`
   );
 
   const handleClick = () => {

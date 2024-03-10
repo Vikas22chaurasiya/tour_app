@@ -87,6 +87,7 @@
 
 .siRating>span{
   font-weight: 500;
+  width: fit-content;
 }
 .siRating>button{
  background-color: #003580;

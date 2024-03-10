@@ -3,9 +3,10 @@ import "./featured.css";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
-    "/packages/countByCity?cities=mumbai,delhi,agra"
+    `${process.env.REACT_APP_LINK}/packages/countByCity?cities=mumbai,delhi,agra`
   );
 
+  console.log( `${process.env.REACT_APP_LINK}/packages/countByCity?cities=mumbai,delhi,agra`)
   return (
     <div className="featured">
       {loading ? (

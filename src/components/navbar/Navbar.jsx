@@ -11,7 +11,7 @@ const Navbar = () => {
     e.preventDefault();
     dispatch({ type: "LOGOUT" });
     try {
-      await axios.post("/auth/logout");
+      await axios.post(`${process.env.REACT_APP_LINK}/auth/logout`);
       navigate("/")
     } catch (err) {
       console.log(err)

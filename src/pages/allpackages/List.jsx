@@ -25,14 +25,14 @@ const AllList = () => {
   const { user } = useContext(AuthContext);
   
   const { data, loading, error, reFetch } = useFetch(
-    `/packages?city=${destination}&min=${min || 0}&max=${max || 999}&limit=30`
+    `${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0}&max=${max || 999}&limit=30`
   );
 
   const person = user? user.username : "No-User"
 
  
   const { datalist, reFetch1, loading1 } = useFetchfav(
-    `/favorites/${person}/favlist`
+    `${process.env.REACT_APP_LINK}/favorites/${person}/favlist`
   );
   console.log(datalist);
 
@@ -57,23 +57,14 @@ const AllList = () => {
 
             <div className={styles.lsItem}>
               <label>Destination</label>
-              <select
-                id="destination"
-                value={destination}
+              <input 
+              id="destination"
                 onChange={(e) => setDestination(e.target.value)}
-                // autoFocus={true}
-              >
-                <option value="Agra">Agra</option>
-                <option value="New Delhi">New Delhi</option>
-                <option value="Jaipur">Jaipur</option>
-                <option value="Kochi">Kochi</option>
-                <option value="Udaipur">Udaipur</option>
-                <option value="Kashmir">Kashmir</option>
-                <option value="Leh & Ladakh">Leh & Ladakh</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Rajastan">Rajastan</option>
-                <option value="Kerala">Kerala</option>
-              </select>
+                placeholder=""
+                value={destination}
+                type="text" />
+            
+             
             </div>
 
             <div className={styles.lsItem}>

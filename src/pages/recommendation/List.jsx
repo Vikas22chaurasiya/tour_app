@@ -26,13 +26,13 @@ const RecList = () => {
 
 
   const { data, loading, error, reFetch } = useFetch(
-    `/recommendations?city=${destination}&style=${style}&price=${price || 0
+    `${process.env.REACT_APP_LINK}/recommendations?city=${destination}&style=${style}&price=${price || 0
     }&duration=${duration || 0}&min=${min || 0}&max=${max || 999}&limit=10`
   );
  console.log(data)
   const person = user? user.username : "No-User"
   const { datalist, reFetch1, loading1 } = useFetchfav(
-    `/favorites/${person}/favlist`
+    `${process.env.REACT_APP_LINK}/favorites/${person}/favlist`
   );
   const handleClick = () => {
     reFetch();
