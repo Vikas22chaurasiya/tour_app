@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import Home from "./pages/home/Home";
-import List from "./pages/list/List";
 import AllList from "./pages/allpackages/List";
 import Login from "./pages/login/Login";
 import Package from './pages/Package/Package'
@@ -20,7 +19,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/packages" element={<List/>}/>
         <Route path="/packages/:id" element={<Package/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<RegistrationPage/>}/>

@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import "./searchItem.css";
 import StarRatingComponent from "../StarRating/StarRatingComponent";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext} from "react";
 import {
-  faHeart,
-  faStar
+  faHeart
  
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useFetchfav from "../../hooks/useFetchfav";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
@@ -44,7 +42,7 @@ const SearchItem = ({ item, change, list, count }) => {
     <div className="searchItem">
       <img src={item.img_link} alt="" className="siImg" />
       <div className="siDesc">
-        <h1 className="siTitle">{item.Package_name + item.PackageNo}</h1>
+        <h1 className="siTitle">{item.Package_name}</h1>
 
         <span className="siFeatures destination">
           Destination: <span className="nobold">{item.Destination}</span>

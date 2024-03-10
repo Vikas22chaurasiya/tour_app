@@ -3,8 +3,6 @@ import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
-import { format } from "date-fns";
-import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import useFetch from "../../hooks/useFetch";
 import useFetchfav from "../../hooks/useFetchfav";
@@ -14,20 +12,21 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const AllList = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState("");
-  const [adultCount, setAdultCount] = useState(1);
-  const [childCount, setChildCount] = useState(0);
-  const [dates, setDates] = useState("");
-  const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState("");
+  const a = location.state ? location.state.destination || "" : ""
+  const b =  location.state ?location.state.options.adult || 1 : 1
+  const c=  location.state ?location.state.options.children || 0 : 0
+  const [destination, setDestination] = useState(a);
+  const [adultCount, setAdultCount] = useState(b);
+  const [childCount, setChildCount] = useState(c);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const { user } = useContext(AuthContext);
   
-  const { data, loading, error, reFetch } = useFetch(
-    `${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0}&max=${max || 999}&limit=30`
+  const { data, reFetch } = useFetch(
+    `${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0}&max=${max || 9999}&limit=30`
   );
 
+  console.log( `${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0}&max=${max || 999}&limit=30`)
   const person = user? user.username : "No-User"
 
  
@@ -92,7 +91,7 @@ const AllList = () => {
                     type="number"
                     min={1}
                     className={styles.lsOptionInput}
-                    placeholder={options.adult}
+                    placeholder=""
                     value={adultCount}
                     onChange={(e) => {
                       setAdultCount(e.target.value);
@@ -105,7 +104,7 @@ const AllList = () => {
                     type="number"
                     min={0}
                     className={styles.lsOptionInput}
-                    placeholder={options.children}
+                    placeholder=""
                     value={childCount}
                     onChange={(e) => {
                       setChildCount(e.target.value);
