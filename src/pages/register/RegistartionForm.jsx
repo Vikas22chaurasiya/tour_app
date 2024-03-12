@@ -46,6 +46,7 @@ const RegistrationForm = ({ onSubmit }) => {
           id="password"
           onChange={handleChange}
           className="rInput"
+          required
         />
 
         <input
