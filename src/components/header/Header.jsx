@@ -25,7 +25,7 @@ const Header = ({ type }) => {
   const [packages, setpackages] = useState(false);
   const [rec, setrec] = useState(false);
   const [fav, setfav] = useState(false);
-  
+
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
@@ -150,38 +150,20 @@ const Header = ({ type }) => {
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />
-                {/* <input
+                <input
                   type="text"
                   placeholder="Where are you going?"
                   className="headerSearchInput"
                   onChange={(e) => setDestination(e.target.value)}
-                /> */}
-                <select
-                  className="headerSearchInput"
-                  id="destination"
-                  value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
-                >
-                  <option value="" disabled hidden style={{ color: '#b0b0b0' }}>Where are you going?</option>
-                  <option value="Agra">Agra</option>
-                  <option value="New Delhi">New Delhi</option>
-                  <option value="Jaipur">Jaipur</option>
-                  <option value="Kochi">Kochi</option>
-                  <option value="Udaipur">Udaipur</option>
-                  <option value="Kashmir">Kashmir</option>
-                  <option value="Leh & Ladakh">Leh & Ladakh</option>
-                  <option value="Tamil Nadu">Tamil Nadu</option>
-                  <option value="Rajastan">Rajastan</option>
-                  <option value="Kerala">Kerala</option>
-                </select>
+                />
               </div>
-             
+
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faPerson} className="headerIcon" />
                 <span
                   onClick={() => setOpenOptions(!openOptions)}
                   className="headerSearchText"
-                >{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
+                >{`${options.adult} adult · ${options.children} children`}</span>
                 {openOptions && (
                   <div className="options">
                     <div className="optionItem">
@@ -226,7 +208,7 @@ const Header = ({ type }) => {
                         </button>
                       </div>
                     </div>
-                   
+
                   </div>
                 )}
               </div>

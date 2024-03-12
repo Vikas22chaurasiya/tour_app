@@ -12,34 +12,32 @@ const RegistrationForm = ({ onSubmit }) => {
   });
 
   const { loading, error } = useContext(AuthContext);
-
-
+  
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
-    if(!credentials.username & !credentials.password){
+    if (!credentials.username & !credentials.password) {
       alert('Please fill in the field');
       return;
-    }else{
+    } else {
       onSubmit(credentials);
 
     }
-   
+
   };
 
-
   return (
-    <div className="login">
-      <div className="lContainer">
+    <div className="register">
+      <div className="rContainer">
         <input
           type="text"
           placeholder="username"
           id="username"
           onChange={handleChange}
-          className="lInput"
+          className="rInput"
           required
         />
         <input
@@ -47,7 +45,7 @@ const RegistrationForm = ({ onSubmit }) => {
           placeholder="password"
           id="password"
           onChange={handleChange}
-          className="lInput"
+          className="rInput"
         />
 
         <input
@@ -55,7 +53,7 @@ const RegistrationForm = ({ onSubmit }) => {
           placeholder="email"
           id="email"
           onChange={handleChange}
-          className="lInput"
+          className="rInput"
         />
 
         <input
@@ -63,7 +61,7 @@ const RegistrationForm = ({ onSubmit }) => {
           placeholder="city"
           id="city"
           onChange={handleChange}
-          className="lInput"
+          className="rInput"
         />
 
         <input
@@ -71,7 +69,7 @@ const RegistrationForm = ({ onSubmit }) => {
           placeholder="country"
           id="country"
           onChange={handleChange}
-          className="lInput"
+          className="rInput"
         />
 
         <input
@@ -79,18 +77,18 @@ const RegistrationForm = ({ onSubmit }) => {
           placeholder="mobile no"
           id="phone"
           onChange={handleChange}
-          className="lInput"
+          className="rInput"
           onKeyDown={(e) => e.key === "Enter" && handleClick(e)}
         />
-        <button disabled={loading} onClick={handleClick} className="lButton">
+        <button disabled={loading} onClick={handleClick} className="rButton">
           Register
         </button>
         <Link to="/login">
-        <button className="lButton">
-          Already registered? Log in
-        </button>
+          <button className="rButton linkbtn">
+            Already registered? Log in
+          </button>
         </Link>
-        
+
         {error && <span>{error.message}</span>}
       </div>
     </div>

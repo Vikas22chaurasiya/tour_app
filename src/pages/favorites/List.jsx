@@ -2,7 +2,7 @@ import styles from "./list.module.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useLocation } from "react-router-dom";
-import {  useContext,useEffect,useNavigate,useState } from "react";
+import { useContext, useEffect, useNavigate, useState } from "react";
 import SearchItem from "../../components/searchItem/SearchItem";
 import useFetch from "../../hooks/useFetch";
 import useFetchfav from "../../hooks/useFetchfav";
@@ -15,17 +15,17 @@ const List = () => {
 
   const location = useLocation();
   const { user } = useContext(AuthContext);
-  const[change,setchange] = useState(0);
+  const [change, setchange] = useState(0);
 
-  const { datalist,reFetch1,loading1 } = useFetchfav(
+  const { datalist, reFetch1, loading1 } = useFetchfav(
     `${process.env.REACT_APP_LINK}/favorites/${user.username}/favlist`
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     reFetch();
-   
 
-  },[change])
+
+  }, [change])
   const { data, loading, error, reFetch } = useFetch(
     `${process.env.REACT_APP_LINK}/favorites/${user.username}`
   );
@@ -35,37 +35,35 @@ const List = () => {
   };
 
   return (
-   
+
     <div>
       <Navbar />
       <Header type="list" />
       <div className={styles.listContainer}>
-          <div className={styles.listResult}>
-            {loading1 ? (
-              <>
-              <Skeleton count={10} style={{marginLeft:"50px",marginRight:"50px"}} />
+        <div className={styles.listResult}>
+          {loading1 ? (
+            <>
+              <Skeleton count={10} style={{ marginLeft: "50px", marginRight: "50px" }} />
               <br></br>
-              <Skeleton count={10} style={{marginLeft:"50px",marginRight:"50px"}} />
+              <Skeleton count={10} style={{ marginLeft: "50px", marginRight: "50px" }} />
               <br></br>
-              <Skeleton count={10} style={{marginLeft:"50px",marginRight:"50px"}} />
+              <Skeleton count={10} style={{ marginLeft: "50px", marginRight: "50px" }} />
               <br></br>
-              <Skeleton count={10} style={{marginLeft:"50px",marginRight:"50px"}} />
+              <Skeleton count={10} style={{ marginLeft: "50px", marginRight: "50px" }} />
               <br></br>
-              <Skeleton count={10} style={{marginLeft:"50px",marginRight:"50px"}} />
-    
-              
-              </>
-            ) : (
-              <>
-                {data.map((item) => (
-                  <SearchItem item={item}  change ={setchange} list ={datalist.favorites} key={item._id} />
-                ))}
-              </>
-            )}
-          </div>
+              <Skeleton count={10} style={{ marginLeft: "50px", marginRight: "50px" }} />
+            </>
+          ) : (
+            <>
+              {data.map((item) => (
+                <SearchItem item={item} change={setchange} list={datalist.favorites} key={item._id} />
+              ))}
+            </>
+          )}
         </div>
+      </div>
     </div>
-  
+
   );
 };
 

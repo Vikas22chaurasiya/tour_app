@@ -55,11 +55,11 @@ const Login = () => {
         </button>
 
         <Link to="/register">
-        <button className="lButton">
-          Not Registered? Sign in
-        </button>
+          <button className="lButton linkButton">
+            Not Registered? Sign in
+          </button>
         </Link>
-        
+
         {error && <span>{error.message}</span>}
       </div>
     </div>

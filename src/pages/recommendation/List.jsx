@@ -24,12 +24,10 @@ const RecList = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
 
-
   const { data, loading, error, reFetch } = useFetch(
     `${process.env.REACT_APP_LINK}/recommendations?city=${destination}&style=${style}&price=${price || 0
     }&duration=${duration || 0}&min=${min || 0}&max=${max || 999}&limit=10`
   );
- console.log(data)
   const person = user? user.username : "No-User"
   const { datalist, reFetch1, loading1 } = useFetchfav(
     `${process.env.REACT_APP_LINK}/favorites/${person}/favlist`
@@ -57,13 +55,17 @@ const RecList = () => {
                 <option value="Agra">Agra</option>
                 <option value="New Delhi">New Delhi</option>
                 <option value="Jaipur">Jaipur</option>
-                <option value="Kochi">Kochi</option>
                 <option value="Udaipur">Udaipur</option>
+                <option value="Jodhpur">Jodhpur</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Kochi">Kochi</option>
                 <option value="Kashmir">Kashmir</option>
                 <option value="Leh & Ladakh">Leh & Ladakh</option>
                 <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Rajastan">Rajastan</option>
                 <option value="Kerala">Kerala</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Fatehpur Sikri">Fatehpur Sikri</option>
+                <option value="National Park">National Park</option>
               </select>
             </div>
 
@@ -128,8 +130,7 @@ const RecList = () => {
                     type="number"
                     min={1}
                     className={styles.lsOptionInput}
-                    placeholder={options.adult}
-                    // value={options.adult}
+                    placeholder={options.adult}इ
                     value={adultCount}
                     onChange={(e) => {
                       setAdultCount(e.target.value);

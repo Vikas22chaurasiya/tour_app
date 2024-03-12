@@ -34,16 +34,8 @@ const data1 = {
 	Price: "$1,315",
 	itinerary:
 		"Start and end in New Delhi! With the In-depth Cultural tour Romantic Rajasthan with Khajuraho Varanasi, you have a 15 days tour package taking you through New Delhi, India and 10 other destinations in India. Romantic Rajasthan with Khajuraho Varanasi includes accommodation in a hotel as well as an expert guide, meals, transport and more.",
-	imagelist: [
-		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='260'%20height='203'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
-		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='260'%20height='203'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
-		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='260'%20height='203'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
-		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='260'%20height='203'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
-		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='260'%20height='203'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
-		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='260'%20height='203'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
-		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='260'%20height='203'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
-		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='260'%20height='203'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
-	],
+	imagelist: ['//cdn.tourradar.com/s3/cities/260x203/7751_010362.jpg', '//cdn.tourradar.com/s3/cities/260x203/7755_b60433.jpg', '//cdn.tourradar.com/s3/cities/260x203/15360_1749b9.jpg', '//cdn.tourradar.com/s3/cities/260x203/7762_28ce34.jpg'],
+	// imagelist: [],
 	map_link:
 		"data:image/svg+xml;charset=UTF-8,%3Csvg%20width='1171'%20height='320'%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
 	Duration: "15 days",
@@ -183,15 +175,16 @@ const included = [
 const Package = () => {
 	const location = useLocation();
 	const id = location.pathname.split("/")[2];
+
+	// const count = location.search.substring(1);
+	const count = location.search.split('=')[1];
+
 	const [slideNumber, setSlideNumber] = useState(0);
 	const [open, setOpen] = useState(false);
 
 	const { data, loading } = useFetch(`${process.env.REACT_APP_LINK}/packages/find/${id}`);
-	console.log(data.days)
 	const { user } = useContext(AuthContext);
 	const navigate = useNavigate();
-
-
 
 	// const handleOpen = (i) => {
 	// 	setSlideNumber(i);
@@ -206,11 +199,9 @@ const Package = () => {
 		} else {
 			newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
 		}
-
 		setSlideNumber(newSlideNumber);
 	};
 
-	
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isExpanded1, setIsExpanded1] = useState(false);
 	const [expandedDays, setExpandedDays] = useState({});
@@ -234,12 +225,7 @@ const Package = () => {
 			[index]: !prevState[index],
 		}));
 	};
-	
-	const d= data.days
 
-	console.log(d)
-
-	
 	return (
 		<div>
 			<Navbar />
@@ -285,10 +271,7 @@ const Package = () => {
 							<div>
 								Start and end in{" "}
 								<span className={styles.destinations}>
-									<b>{data && data.Destination &&  data.Destination.split(",")[0]}</b>
-									
-
-									
+									<b>{data && data.Destination && data.Destination.split(",")[0]}</b>
 								</span>
 							</div>
 							<div className={styles.contents}>
@@ -309,59 +292,56 @@ const Package = () => {
 									<span className={styles.detailsText}>{data.Operated_in}</span>
 								</div>
 							</div>
-							<span className={styles.packagePrice}>  ₹{data && data.Price && Number(data.Price.replace(/,/g, "") * (location.state.count > 1 ? location.state.count : 1)).toLocaleString()}</span>
+							<span className={styles.packagePrice}>  ₹{data && data.Price && Number(data.Price.replace(/,/g, "") * (count > 1 ? count : 1)).toLocaleString()}</span>
 							<button className={styles.bookNow}>Reserve or Book Now!</button>
 						</div>
 					</div>
 					<div className={styles.imageContainer}>
 						<h2>Places You'll See</h2>
-						
 						<div className={styles.packageImages}>
-							<div className={styles.imageItem}>
-								<img
-									className={styles.image}
-									src="//cdn.tourradar.com/s3/cities/260x203/7751_010362.jpg"
-									alt=""
-								/>
-								<h4>Jaipur</h4>
-							</div>
-							<div className={styles.imageItem}>
-								<img
-									className={styles.image}
-									src="//cdn.tourradar.com/s3/cities/260x203/7762_28ce34.jpg"
-									alt=""
-								/>
-								<h4>Agra</h4>
-							</div>
-							<div className={styles.imageItem}>
-								<img
-									className={styles.image}
-									src="//cdn.tourradar.com/s3/cities/260x203/7761_d8b7ae.jpg"
-									alt=""
-								/>
-								<h4>New Delhi</h4>
-							</div>
+							{data && data.imagelist && data.imagelist.length > 1 ? data.imagelist.map((img, i) =>
+								<div className={styles.imageItem} key={i}>
+									<img className={styles.image} src={img} alt={`Destination ${i}`} />
+									{data.Destination && data.Destination.split(',')[i] && (
+										<h4>{data.Destination.split(',')[i]}</h4>
+									)}
+								</div>
+							) : (
+								<>
+									<div className={styles.imageItem}>
+										<img
+											className={styles.image}
+											src="//cdn.tourradar.com/s3/cities/260x203/7751_010362.jpg"
+											alt="Jaipur"
+										/>
+										<h4>Jaipur</h4>
+									</div>
+									<div className={styles.imageItem}>
+										<img
+											className={styles.image}
+											src="//cdn.tourradar.com/s3/cities/260x203/7762_28ce34.jpg"
+											alt="Agra"
+										/>
+										<h4>Agra</h4>
+									</div>
+									<div className={styles.imageItem}>
+										<img
+											className={styles.image}
+											src="//cdn.tourradar.com/s3/cities/260x203/7761_d8b7ae.jpg"
+											alt="New Delhi"
+										/>
+										<h4>New Delhi</h4>
+									</div>
+								</>
+							)
+							}
 						</div>
 					</div>
 					<div className={styles.packageInfo}>
 						<div className={styles.itineraryContainer}>
 							<h2>Itinerary</h2>
-							<div className={styles.itinerary}>{data.itinerary|| data1.itinerary}</div>
+							<div className={styles.itinerary}>{data.itinerary || data1.itinerary}</div>
 						</div>
-						{/* <div className={styles.introContainer}>
-              <div className={styles.intro}>
-                <h2>Introduction</h2>
-                <p>{data.intro}</p>
-              </div>
-              <div className={styles.days}>
-                {data.days.map((day, i) => (
-                  <div key={i} className={styles.day}>
-                    <h4>{day.title}</h4>
-                    <p>{day.description}</p>
-                  </div>
-                ))}
-              </div>
-            			</div> */}
 						<div className={styles.introContainer}>
 							<div className={styles.intro}>
 								<h2>Introduction</h2>
@@ -369,9 +349,7 @@ const Package = () => {
 							</div>
 							<button onClick={toggleExpand}>
 								{isExpanded ? "Hide All" : "Expand All"}
-							</button>{
-								console.log(data.days)
-							}
+							</button>
 							<div className={styles.days}>
 								{data && data.days && data.days.map((day, i) => (
 									<div key={i} className={styles.day}>
@@ -407,7 +385,7 @@ const Package = () => {
 						<div className={styles.included}>
 							{included.map((item, i) => (
 								<div key={i} className={styles.includedItem}>
-									<div style={{display: 'flex', gap: '10px'}}>
+									<div style={{ display: 'flex', gap: '10px' }}>
 										{item.isIncluded ? (
 											<FaCheckCircle style={{ color: 'green', fontSize: '24px' }} />
 										) : (
@@ -422,11 +400,11 @@ const Package = () => {
 							))}
 						</div>
 					</div>
-					<br/>
-					<br/>
-					<br/>
+					<br />
+					<br />
+					<br />
 					<MailList />
-					<br/><br/>
+					<br /><br />
 					<Footer />
 				</div>
 			)}

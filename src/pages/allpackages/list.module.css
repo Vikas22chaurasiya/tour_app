@@ -45,10 +45,12 @@
 .lsItem > input {
   height: 30px;
   border: none;
-  padding: 5px;
+  outline: none;
+  padding: 5px 15px 5px;
   border-radius: 10px;
   background-color: rgb(243, 240, 240);
   color: rgb(43, 1, 91);
+  font-size: 0.9rem;
 }
 
 .lsItem > select {

@@ -1,7 +1,5 @@
 .homeContainer{
-  /* background-color: #ffe7e7; */
   background-color: rgb(243, 240, 240);
-  /* margin-top: 50px; */
   padding-top: 50px;
   display: flex;
   flex-direction: column;

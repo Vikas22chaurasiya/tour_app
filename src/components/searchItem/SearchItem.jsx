@@ -1,23 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./searchItem.css";
 import StarRatingComponent from "../StarRating/StarRatingComponent";
 import { useNavigate } from "react-router-dom";
-import { useState, useContext} from "react";
-import {
-  faHeart
- 
-} from "@fortawesome/free-solid-svg-icons";
+import { useState, useContext } from "react";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
-
 const SearchItem = ({ item, change, list, count }) => {
   const { user } = useContext(AuthContext);
- 
+  const location = useLocation();
   const navigate = useNavigate();
-
-  console.log(list);
 
   var trick = false;
   if (list.includes(Number(item.PackageNo))) {
@@ -31,28 +25,34 @@ const SearchItem = ({ item, change, list, count }) => {
     setfav((prev) => !prev);
     try {
       if (!Fav) {
-        await axios.post(`${process.env.REACT_APP_LINK}/favorites/${user.username}/add/${item.PackageNo}`);
-        console.log(`${process.env.REACT_APP_LINK}/favorites/${user.username}/add/${item.PackageNo}`);
+        await axios.post(
+          `${process.env.REACT_APP_LINK}/favorites/${user.username}/add/${item.PackageNo}`
+        );
+        console.log(
+          `${process.env.REACT_APP_LINK}/favorites/${user.username}/add/${item.PackageNo}`
+        );
       } else {
-        await axios.delete(`${process.env.REACT_APP_LINK}/favorites/${user.username}/delete/${item.PackageNo}`);
+        await axios.delete(
+          `${process.env.REACT_APP_LINK}/favorites/${user.username}/delete/${item.PackageNo}`
+        );
         change((prev) => prev + 1);
         //window.location.reload(false);
       }
     } catch (err) {}
   };
 
-  const handlepackage= async ()=>{
-
-    navigate(`/packages/${item._id}`, { state: { count } });
-
-
-  }
+  // const handlepackage = async () => {
+  //   navigate(`/packages/${item._id}`, { state: { count } });
+  // const url = `/packages/${item._id}`;
+  // const newTab = window.open(url, "_blank");
+  // newTab.focus();
+  // }
 
   return (
     <div className="searchItem">
       <img src={item.img_link} alt="" className="siImg" />
       <div className="siDesc">
-        <h1 className="siTitle">{item.Package_name+item.PackageNo}</h1>
+        <h1 className="siTitle">{item.Package_name + item.PackageNo}</h1>
 
         <span className="siFeatures destination">
           Destination: <span className="nobold">{item.Destination}</span>
@@ -60,11 +60,9 @@ const SearchItem = ({ item, change, list, count }) => {
         <span className="siFeatures">
           Duration: <span className="nobold">{item.Duration}</span>
         </span>
-        {/* <span className="siFeatures">Age range:{item.Age_range}</span> */}
         <span className="siFeatures">
           Country Region: <span className="nobold">{item.Country_region}</span>
         </span>
-        {/* <span className="siFeatures">Operated in: {item.Operated_in}</span> */}
         <span className="siFeatures">
           Travel Style: <span className="nobold">{item.Main_style}</span>
         </span>
@@ -76,17 +74,18 @@ const SearchItem = ({ item, change, list, count }) => {
       </div>
 
       <div className="siDetails">
-        {/* {item.Review && (
-          <div className="siRating">
-             <span><StarRatingComponent  name="rate1"  starCount={5} value={item.Review}
-        /></span>
-         </div>
-        )} */}
         <div className="siDetailTexts">
           <span onClick={handleclick} className="favicon">
-          {item.Review && (
-             <span><StarRatingComponent  name="rate1"  starCount={5} value={item.Review}/>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        )}
+            {item.Review && (
+              <span>
+                <StarRatingComponent
+                  name="rate1"
+                  starCount={5}
+                  value={item.Review}
+                />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+            )}
             {Fav ? (
               <FontAwesomeIcon
                 icon={faHeart}
@@ -102,17 +101,23 @@ const SearchItem = ({ item, change, list, count }) => {
             )}
           </span>
           <div className="priceDetails">
-            {/* <span className="siPrice">₹{item.Price}</span> */}
             <span className="siPrice">
-               
-              ₹{Number(item.Price.replace(/,/g, "") * (count > 1 ? count : 1)).toLocaleString()}
+              ₹
+              {Number(
+                item.Price.replace(/,/g, "") * (count > 1 ? count : 1)
+              ).toLocaleString()}
             </span>
             <span className="siTaxOp">Includes taxes and fees</span>
           </div>
-          <button className="siCheckButton" onClick={handlepackage}>See availability</button>
-          {/* <Link to={`/packages/${item._id}`}>
+          <Link
+            to={{
+              pathname: `/packages/${item._id}`,
+              search: `count=${count}`,
+            }}
+            target="_blank"
+          >
             <button className="siCheckButton">See availability</button>
-          </Link> */}
+          </Link>
         </div>
       </div>
     </div>

@@ -63,7 +63,6 @@ const AllList = () => {
                 value={destination}
                 type="text" />
             
-             
             </div>
 
             <div className={styles.lsItem}>
@@ -111,15 +110,6 @@ const AllList = () => {
                     }}
                   />
                 </div>
-                {/* <div className={styles.lsOptionItem}>
-                  <span className={styles.lsOptionText}>Room</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className={styles.lsOptionInput}
-                    placeholder={options.room}
-                  />
-                </div> */}
               </div>
             </div>
             <button onClick={handleClick}>Search</button>
