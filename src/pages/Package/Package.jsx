@@ -295,7 +295,7 @@ const Package = () => {
 							</div>
 							<span className={styles.packagePrice}>  ₹{data && data.Price && Number(data.Price.replace(/,/g, "") * (count > 1 ? count : 1)).toLocaleString()}</span>
 							<button className={styles.bookNow}>Call now to enquire OR</button>
-							<WhatsAppButton  phoneNumber='8369072323' message={"Inquire about package:"+data.Package_name} />
+							<WhatsAppButton  phoneNumber='1234567890' message={"Inquire about package:"+data.Package_name} />
 						</div>
 					</div>
 					<div className={styles.imageContainer}>
