@@ -1,5 +1,8 @@
 import useFetch from "../../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import "./featured.css";
 
 const Featured = () => {
@@ -23,7 +26,22 @@ const Featured = () => {
   return (
     <div className="featured">
       {loading ? (
-        "Loading please wait"
+        <>
+                <Skeleton
+                  count={10}
+                  style={{width:"300px"}}
+                />
+                <br></br>
+                <Skeleton
+                  count={10}
+                  style={{width:"300px"}}
+                />
+                <br></br>
+                <Skeleton
+                  count={10}
+                  style={{width:"300px"}}
+                />
+              </>
       ) : (
         <>
           <div className="featuredItem">

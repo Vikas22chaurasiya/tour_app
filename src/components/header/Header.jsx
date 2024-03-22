@@ -146,7 +146,7 @@ const Header = ({ type }) => {
                 </button>}
             </center>
 
-            {!user && <button className="headerBtn">Sign in / Register</button>}
+            {/* {!user && <button className="headerBtn">Sign in / Register</button>} */}
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />

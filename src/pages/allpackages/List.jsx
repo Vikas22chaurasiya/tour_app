@@ -15,15 +15,17 @@ const AllList = () => {
   const a = location.state ? location.state.destination || "" : ""
   const b =  location.state ?location.state.options.adult || 1 : 1
   const c=  location.state ?location.state.options.children || 0 : 0
+  const d = location.state ? location.state.style || "" : ""
   const [destination, setDestination] = useState(a);
   const [adultCount, setAdultCount] = useState(b);
   const [childCount, setChildCount] = useState(c);
+  const [style, setStyle] = useState(d);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const { user } = useContext(AuthContext);
   
   const { data, reFetch } = useFetch(
-    `${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0}&max=${max || 9999}&limit=30`
+    `${process.env.REACT_APP_LINK}/packages?city=${destination}&mainstyle=${style}&min=${min || 0}&max=${max || 9999}&limit=30`
   );
 
   console.log( `${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0}&max=${max || 999}&limit=30`)
@@ -61,6 +63,16 @@ const AllList = () => {
                 onChange={(e) => setDestination(e.target.value)}
                 placeholder=""
                 value={destination}
+                type="text" />
+            
+            </div>
+            <div className={styles.lsItem}>
+              <label>Main Style</label>
+              <input 
+              id="style"
+                onChange={(e) => setStyle(e.target.value)}
+                placeholder=""
+                value={style}
                 type="text" />
             
             </div>

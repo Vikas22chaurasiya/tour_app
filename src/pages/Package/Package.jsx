@@ -17,6 +17,7 @@ import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
 import { IoIosArrowDown, IoIosArrowUp, IoIosStar } from "react-icons/io";
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import WhatsAppButton from "../../components/whatsapp/Whatsapp";
 
 const data1 = {
 	Sr_no: 393,
@@ -293,7 +294,8 @@ const Package = () => {
 								</div>
 							</div>
 							<span className={styles.packagePrice}>  ₹{data && data.Price && Number(data.Price.replace(/,/g, "") * (count > 1 ? count : 1)).toLocaleString()}</span>
-							<button className={styles.bookNow}>Reserve or Book Now!</button>
+							<button className={styles.bookNow}>Call now to enquire OR</button>
+							<WhatsAppButton  phoneNumber='8369072323' message={"Inquire about package:"+data.Package_name} />
 						</div>
 					</div>
 					<div className={styles.imageContainer}>
