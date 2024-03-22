@@ -7,8 +7,12 @@ import "./register.css";
 
 const RegistrationForm = ({ onSubmit }) => {
   const [credentials, setCredentials] = useState({
-    username: undefined,
-    password: undefined,
+     username: '',
+    password: '',
+    email: '',
+    city: '',
+    country: '',
+    phone: '',
   });
 
   const { loading, error } = useContext(AuthContext);
@@ -19,12 +23,17 @@ const RegistrationForm = ({ onSubmit }) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    if (!credentials.username & !credentials.password) {
-      alert('Please fill in the field');
+    if (!credentials.username || !credentials.password) {
+      alert('Please fill in the username and password fields');
+      return;
+    } else if (!credentials.email.includes('@')) {
+      alert('Please enter a valid email address');
+      return;
+    } else if (!credentials.phone.match(/^\d{10}$/)) {
+      alert('Please enter a valid 10-digit phone number');
       return;
     } else {
       onSubmit(credentials);
-
     }
 
   };
@@ -36,6 +45,7 @@ const RegistrationForm = ({ onSubmit }) => {
           type="text"
           placeholder="username"
           id="username"
+          value={credentials.username}
           onChange={handleChange}
           className="rInput"
           required
@@ -44,6 +54,7 @@ const RegistrationForm = ({ onSubmit }) => {
           type="password"
           placeholder="password"
           id="password"
+          value={credentials.password}
           onChange={handleChange}
           className="rInput"
           required
@@ -53,14 +64,17 @@ const RegistrationForm = ({ onSubmit }) => {
           type="email"
           placeholder="email"
           id="email"
+          value={credentials.email}
           onChange={handleChange}
           className="rInput"
+          required
         />
 
         <input
           type="city"
           placeholder="city"
           id="city"
+          value={credentials.city}
           onChange={handleChange}
           className="rInput"
         />
@@ -69,6 +83,7 @@ const RegistrationForm = ({ onSubmit }) => {
           type="text"
           placeholder="country"
           id="country"
+          value={credentials.country}
           onChange={handleChange}
           className="rInput"
         />
@@ -77,6 +92,7 @@ const RegistrationForm = ({ onSubmit }) => {
           type="tel"
           placeholder="mobile no"
           id="phone"
+          value={credentials.phone}
           onChange={handleChange}
           className="rInput"
           onKeyDown={(e) => e.key === "Enter" && handleClick(e)}
