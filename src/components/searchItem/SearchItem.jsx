@@ -52,7 +52,7 @@ const SearchItem = ({ item, change, list, count }) => {
     <div className="searchItem">
       <img src={item.img_link} alt="" className="siImg" />
       <div className="siDesc">
-        <h1 className="siTitle">{item.Package_name + item.PackageNo}</h1>
+        <h1 className="siTitle">{item.Package_name}</h1>
 
         <span className="siFeatures destination">
           Destination: <span className="nobold">{item.Destination}</span>

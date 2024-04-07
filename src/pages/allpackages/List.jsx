@@ -13,8 +13,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 const AllList = () => {
   const location = useLocation();
   const a = location.state ? location.state.destination || "" : ""
-  const b =  location.state ?location.state.options.adult || 1 : 1
-  const c=  location.state ?location.state.options.children || 0 : 0
+  const b = location.state ? location.state.options.adult || 1 : 1
+  const c = location.state ? location.state.options.children || 0 : 0
   const d = location.state ? location.state.style || "" : ""
   const [destination, setDestination] = useState(a);
   const [adultCount, setAdultCount] = useState(b);
@@ -23,15 +23,15 @@ const AllList = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const { user } = useContext(AuthContext);
-  
+
   const { data, reFetch } = useFetch(
     `${process.env.REACT_APP_LINK}/packages?city=${destination}&mainstyle=${style}&min=${min || 0}&max=${max || 9999}&limit=30`
   );
 
-  console.log( `${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0}&max=${max || 999}&limit=30`)
-  const person = user? user.username : "No-User"
+  console.log(`${process.env.REACT_APP_LINK}/packages?city=${destination}&min=${min || 0}&max=${max || 999}&limit=30`)
+  const person = user ? user.username : "No-User"
 
- 
+
   const { datalist, reFetch1, loading1 } = useFetchfav(
     `${process.env.REACT_APP_LINK}/favorites/${person}/favlist`
   );
@@ -58,24 +58,41 @@ const AllList = () => {
 
             <div className={styles.lsItem}>
               <label>Destination</label>
-              <input 
-              id="destination"
+              <input
+                id="destination"
                 onChange={(e) => setDestination(e.target.value)}
                 placeholder=""
                 value={destination}
                 type="text" />
-            
+
             </div>
+
             <div className={styles.lsItem}>
-              <label>Main Style</label>
-              <input 
-              id="style"
+              <label>Travel Style</label>
+              <select
+                onChange={(e) => setStyle(e.target.value)}
+                // placeholder={style}
+                value={style}
+                type="text"
+              >
+                <option value=""></option>
+                <option value="In-depth Cultural">In-depth Cultural</option>
+                <option value="Explorer">Explorer</option>
+                <option value="Safari">Safari</option>
+                <option value="Hiking & Trekking">Hiking & Trekking</option>
+                <option value="Active Adventure">Active Adventure</option>
+              </select>
+            </div>
+
+            {/* <div className={styles.lsItem}>
+              <label>Travel Style</label>
+              <input
+                id="style"
                 onChange={(e) => setStyle(e.target.value)}
                 placeholder=""
                 value={style}
                 type="text" />
-            
-            </div>
+            </div> */}
 
             <div className={styles.lsItem}>
               <label>Options</label>

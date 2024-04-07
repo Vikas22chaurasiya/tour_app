@@ -19,6 +19,17 @@ import { IoIosArrowDown, IoIosArrowUp, IoIosStar } from "react-icons/io";
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import WhatsAppButton from "../../components/whatsapp/Whatsapp";
 
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import "swiper/css";
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Autoplay, Navigation, Pagination, Scrollbar } from 'swiper/modules';
+// import { sliderSettings } from "./common";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const data1 = {
 	Sr_no: 393,
 	Package_name: "Romantic Rajasthan with Khajuraho Varanasi",
@@ -173,6 +184,73 @@ const included = [
 	},
 ];
 
+const images = {
+	"Agra": "https://cdn.tourradar.com/s3/cities/520x406/7755_b60433.jpg",
+	"New Delhi": "https://cdn.tourradar.com/s3/cities/520x406/7751_010362.jpg",
+	"Taj Mahal": "https://cdn.tourradar.com/s3/cities/520x406/35574_b0a101.jpg",
+	"Ranthambore National Park": "https://cdn.tourradar.com/s3/cities/520x406/15360_1749b9.jpg",
+	"Fatehpur Sikri": "https://cdn.tourradar.com/s3/cities/520x406/13505_5990e1.jpg",
+	"Jaipur": "https://cdn.tourradar.com/s3/cities/260x203/7762_28ce34.jpg",
+	"Jaisalmer": "https://cdn.tourradar.com/s3/cities/520x406/7758_6463e6.jpg",
+	"Pushkar": "https://cdn.tourradar.com/s3/cities/520x406/7761_d8b7ae.jpg",
+	"Mumbai": "https://images.unsplash.com/photo-1580581096469-8afb38d3dbd5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+	"Udaipur": "https://cdn.tourradar.com/s3/cities/260x203/7755_b60433.jpg",
+	"Varanasi": "https://cdn.tourradar.com/s3/tour/750x400/248978_64854380d686b.jpg",
+	"Kochi (Cochin)": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTq0AaJWBs7dAgjF1Ts6tNwF7-c7bmLHCqFbyWxfgkpsyHG8krvglkLfPtoJtybt65MZcdspD6Cj2qXbuIwmiRMS03FzK8-WLxqaRnnew",
+	"Alleppey": "https://cdn.tourradar.com/s3/cities/520x406/11655_7a7a91.jpg",
+	"Kumarakom": "https://cdn.tourradar.com/s3/cities/520x406/11654_9609a5.jpg",
+	"Munnar": "https://cdn.tourradar.com/s3/cities/520x406/11652_49297b.jpg",
+	"Thekkady": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Thekkady.jpg/1280px-Thekkady.jpg",
+	"Thiruvananthapuram": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQuzXO4wlvqCKAkSaZMrd_G9dDnFnNwLCSxavce3rC9ok7COYPELsGrtCVlo7TOit1seW4sOKOXE2rwWF3tE52c1_66ZCJonRpCVW4R-w",
+	"Kovalam": "https://upload.wikimedia.org/wikipedia/commons/0/0e/01KovalamBeach%26Kerala.jpg",
+	"Eranakulam National Park": "https://lh5.googleusercontent.com/p/AF1QipOokRkXSZRtAxessG0mlFuF3F_CSWJBT3yl47yf=w675-h390-n-k-no",
+	"Periyar National Park": "https://lh5.googleusercontent.com/p/AF1QipOy0-a-2jCEflOm4wAvsn7ARM26W-aJG9dpNLsa=w675-h390-n-k-no",
+	"Srinagar": "https://cdn.tourradar.com/s3/tour/750x400/264967_65886474bc600.jpg",
+	"Sonamarg": "https://lh5.googleusercontent.com/p/AF1QipOiX-B1t0ku_3TokD6v38yC4Di7zBXO-GTgkkWi=w743-h429-n-k-no",
+	"Jammu": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcS-zyRhcq4wt7QM4FEJgfy4nJ6NEgVdX_tDxSYbCuEN70QKd_H3BSchVg3LkmjAndGyc-6A7o5eE73JJYlqB1x-DODclpZz4tBEggM3bg",
+	"Gulmarg": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTe5nSlJAgWpy7nPaLAVxWQTMVdxJlE5bVSxDLPr41b-Fwpaw7rs64kZRHVkktuDBT8fLBW63nND6yIMI7sWig9FqH1_-Km_RaBO-stzw",
+	"Pahalgam": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQjTtAT0KhDsg7Oitvf_0YUY91AgzbDiTUw4IwqEi8LMHXHLQFplvOAy7SzKTgg6EdU7CYiywFCSdL_ExRIPsC2kbrQckeZr0LhHwNXwA",
+	"Kargil": "https://lh5.googleusercontent.com/p/AF1QipPyBY0C3QQfT4kxY78fJiSGtw5FqmA42-DehTcK=w743-h429-n-k-no",
+	"Bangalore": "https://lh5.googleusercontent.com/p/AF1QipNHvBtoADn3vXrixppCjv6seso2g07iqNJ-sbWS=w743-h429-n-k-no",
+	"Chennai (Madras)": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRrJU5EgHBqNgfMlM7DGumQADE8BLF7CC4d8Ne-YDrs-JSkvhIskiX3C9Vgh89HfHq-ewqBe2peIOvaCOGls0l35JUyEjixvuVfNgrgxQ",
+	"Mysuru": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSnjRmd9PR7HVyVEWTh0qChNsoHLdN8tW8kYoz7LA0_btU6osNQdmGZOBX3C5G6s98-ikl157kPGuXZiuCKH04iEg5qT_7B1pbY60CRuA",
+	"Tirupathi": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSAXX3qTxKjLrcr4IcagH-QDnzEKeTtfRwuYV_wgq3S_85bM4qMxmjhYOrUhs6zkWyvaiYWGFdtA403d3MbPtYl7bTfaXgcizDhLogUmg",
+	"Rameshwaram": "https://www.tamilnadutourism.tn.gov.in/img/pages/medium-desktop/rameswaram-temple-1656167436_f2c551193bb7d4bc6f70.webp",
+	"Goa": "https://lh5.googleusercontent.com/p/AF1QipPYzTMa04TL6vtKx_9uavtElupMEPOY0MxBsEB1=w743-h429-n-k-no",
+}
+
+const SliderButtons = () => {
+	const swiper = useSwiper()
+	return (
+		<div className="r-buttons flexCenter">
+			<button onClick={() => swiper.slidePrev()}>&lt;</button>
+			<button onClick={() => swiper.slideNext()}>&gt;</button>
+		</div>
+	)
+}
+
+function SampleNextArrow(props) {
+	const { className, style, onClick } = props;
+	return (
+		<div
+			className={className}
+			style={{ ...style, display: "block", background: "black" }}
+			onClick={onClick}
+		/>
+	);
+}
+
+function SamplePrevArrow(props) {
+	const { className, style, onClick } = props;
+	return (
+		<div
+			className={className}
+			style={{ ...style, display: "block", background: "green" }}
+			onClick={onClick}
+		/>
+	);
+}
+
 const Package = () => {
 	const location = useLocation();
 	const id = location.pathname.split("/")[2];
@@ -181,16 +259,26 @@ const Package = () => {
 	const count = location.search.split('=')[1];
 
 	const [slideNumber, setSlideNumber] = useState(0);
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(true);
 
 	const { data, loading } = useFetch(`${process.env.REACT_APP_LINK}/packages/find/${id}`);
 	const { user } = useContext(AuthContext);
 	const navigate = useNavigate();
 
-	// const handleOpen = (i) => {
-	// 	setSlideNumber(i);
-	// 	setOpen(true);
-	// };
+	const handleOpen = (i) => {
+		setSlideNumber(i);
+		setOpen(true);
+	};
+
+	const settings = {
+		dots: true,
+		infinite: false,
+		speed: 500,
+		slidesToShow: 3,
+		slidesToScroll: 3,
+		nextArrow: <SampleNextArrow />,
+		prevArrow: <SamplePrevArrow />
+	};
 
 	const handleMove = (direction) => {
 		let newSlideNumber;
@@ -227,192 +315,213 @@ const Package = () => {
 		}));
 	};
 
-	return (
-		<div>
-			<Navbar />
-			<Header type="list" />
-			{loading ? (
-				"loading"
-			) : (
-				<div className={styles.packageContainer}>
-					{open && (
-						<div className="slider">
-							<FontAwesomeIcon
-								icon={faCircleXmark}
-								className="close"
-								onClick={() => setOpen(false)}
-							/>
-							<FontAwesomeIcon
-								icon={faCircleArrowLeft}
-								className="arrow"
-								onClick={() => handleMove("l")}
-							/>
-							<img src={data.img_link} alt="" className="sliderImg" />
-							<div className="sliderWrapper">
+	if (data && data.Destination || data.imagelist) {
+		const destinations = data.Destination.split(",");
+		const dest1 = destinations.map((d) => d.trim());
+		const dest = dest1.filter((d) => images[d]);
+		console.log(dest);
+		console.log(data.imagelist);
+		console.log(images[dest[0]]);
+
+		return (
+			<div>
+				<Navbar />
+				<Header type="list" />
+				{loading ? (
+					"loading"
+				) : (
+					<div className={styles.packageContainer}>
+						{/* {open && (
+							<div className="slider">
+								<FontAwesomeIcon
+									icon={faCircleXmark}
+									className="close"
+									onClick={() => setOpen(false)}
+								/>
+								<FontAwesomeIcon
+									icon={faCircleArrowLeft}
+									className="arrow"
+									onClick={() => handleMove("l")}
+								/>
 								<img src={data.img_link} alt="" className="sliderImg" />
+								<div className="sliderWrapper">
+									<img src={data.img_link} alt="" className="sliderImg" />
+								</div>
+								<FontAwesomeIcon
+									icon={faCircleArrowRight}
+									className="arrow"
+									onClick={() => handleMove("r")}
+								/>
 							</div>
-							<FontAwesomeIcon
-								icon={faCircleArrowRight}
-								className="arrow"
-								onClick={() => handleMove("r")}
-							/>
-						</div>
-					)}
-					<div className={styles.packageWrapper}>
-						<img src={data.img_link} alt="" className={styles.packageImg} />
-						<div className={styles.packageDetails}>
-							<h1 className={styles.packageTitle}>{data.Package_name}</h1>
-							<div className={styles.duration}>
-								<span className={styles.destinations}>{data.Duration}</span>
-								<span className={styles.destinations}>
-									{data.Review}
-									<IoIosStar></IoIosStar>
-								</span>
-							</div>
-							<div>
-								Start and end in{" "}
-								<span className={styles.destinations}>
-									<b>{data && data.Destination && data.Destination.split(",")[0]}</b>
-								</span>
-							</div>
-							<div className={styles.contents}>
-								<div className={styles.details}>
-									<p>Tour Operator: </p>
-									<span className={styles.detailsText}>{data.Operator}</span>
+						)} */}
+						<div className={styles.packageWrapper}>
+							<img src={data.img_link} alt="" className={styles.packageImg} />
+							<div className={styles.packageDetails}>
+								<h1 className={styles.packageTitle}>{data.Package_name}</h1>
+								<div className={styles.duration}>
+									<span className={styles.destinations}>{data.Duration}</span>
+									<span className={styles.destinations}>
+										{data.Review}
+										<IoIosStar></IoIosStar>
+									</span>
 								</div>
-								<div className={styles.details}>
-									<p>Age Range: </p>
-									<span className={styles.detailsText}>{data.Age_range}</span>
+								<div>
+									Start and end in{" "}
+									<span className={styles.destinations}>
+										<b>{data && data.Destination && data.Destination.split(",")[0]}</b>
+									</span>
 								</div>
-								<div className={styles.details}>
-									<p>Travel Style: </p>
-									<span className={styles.detailsText}>{data.Main_style}</span>
-								</div>
-								<div className={styles.details}>
-									<p>Opearted in: </p>
-									<span className={styles.detailsText}>{data.Operated_in}</span>
-								</div>
-							</div>
-							<span className={styles.packagePrice}>  ₹{data && data.Price && Number(data.Price.replace(/,/g, "") * (count > 1 ? count : 1)).toLocaleString()}</span>
-							<button className={styles.bookNow}>Call now to enquire OR</button>
-							<WhatsAppButton  phoneNumber='1234567890' message={"Inquire about package:"+data.Package_name} />
-						</div>
-					</div>
-					<div className={styles.imageContainer}>
-						<h2>Places You'll See</h2>
-						<div className={styles.packageImages}>
-							{data && data.imagelist && data.imagelist.length > 1 ? data.imagelist.map((img, i) =>
-								<div className={styles.imageItem} key={i}>
-									<img className={styles.image} src={img} alt={`Destination ${i}`} />
-									{data.Destination && data.Destination.split(',')[i] && (
-										<h4>{data.Destination.split(',')[i]}</h4>
-									)}
-								</div>
-							) : (
-								<>
-									<div className={styles.imageItem}>
-										<img
-											className={styles.image}
-											src="//cdn.tourradar.com/s3/cities/260x203/7751_010362.jpg"
-											alt="Jaipur"
-										/>
-										<h4>Jaipur</h4>
+								<div className={styles.contents}>
+									<div className={styles.details}>
+										<p>Tour Operator: </p>
+										<span className={styles.detailsText}>{data.Operator}</span>
 									</div>
-									<div className={styles.imageItem}>
-										<img
-											className={styles.image}
-											src="//cdn.tourradar.com/s3/cities/260x203/7762_28ce34.jpg"
-											alt="Agra"
-										/>
-										<h4>Agra</h4>
+									<div className={styles.details}>
+										<p>Age Range: </p>
+										<span className={styles.detailsText}>{data.Age_range}</span>
 									</div>
-									<div className={styles.imageItem}>
-										<img
-											className={styles.image}
-											src="//cdn.tourradar.com/s3/cities/260x203/7761_d8b7ae.jpg"
-											alt="New Delhi"
-										/>
-										<h4>New Delhi</h4>
+									<div className={styles.details}>
+										<p>Travel Style: </p>
+										<span className={styles.detailsText}>{data.Main_style}</span>
 									</div>
-								</>
-							)
-							}
-						</div>
-					</div>
-					<div className={styles.packageInfo}>
-						<div className={styles.itineraryContainer}>
-							<h2>Itinerary</h2>
-							<div className={styles.itinerary}>{data.itinerary || data1.itinerary}</div>
-						</div>
-						<div className={styles.introContainer}>
-							<div className={styles.intro}>
-								<h2>Introduction</h2>
-								<p>{data.intro}</p>
+									<div className={styles.details}>
+										<p>Opearted in: </p>
+										<span className={styles.detailsText}>{data.Operated_in}</span>
+									</div>
+								</div>
+								<span className={styles.packagePrice}>  ₹{data && data.Price && Number(data.Price.replace(/,/g, "") * (count > 1 ? count : 1)).toLocaleString()}</span>
+								<button className={styles.bookNow}>Call now to enquire OR</button>
+								<WhatsAppButton phoneNumber='1234567890' message={"Inquire about package:" + data.Package_name} />
 							</div>
-							<button onClick={toggleExpand}>
-								{isExpanded ? "Hide All" : "Expand All"}
-							</button>
-							<div className={styles.days}>
-								{data && data.days && data.days.map((day, i) => (
-									<div key={i} className={styles.day}>
-										<div
-											style={{
-												display: "flex",
-												justifyContent: "space-between",
-												alignItems: "center",
-											}}
-										>
-											<h4>{day.title}</h4>
-											<button onClick={() => toggleDescription(i)}>
-												{expandedDays[i] ? (
-													<IoIosArrowUp />
-												) : (
-													<IoIosArrowDown />
-												)}
-											</button>
+						</div>
+						<div className={styles.imageContainer}>
+							<h2>Places You'll See</h2>
+							<div className={styles.packageImages}>
+								{dest.length < 5 ?
+									dest.map((location, i) =>
+										<div className={styles.imageItem} key={i}>
+											<img
+												className={styles.image}
+												src={images[location]}
+												alt={dest[location]}
+											/>
+											<h4>{location}</h4>
 										</div>
-										<p style={{ display: expandedDays[i] ? "block" : "none" }}>
-											{day.description}
+									) :
+									<Swiper
+										modules={[Autoplay, Navigation, Pagination, Scrollbar]}
+										spaceBetween={10}
+										slidesPerView={4}
+										// navigation={true}
+										// pagination={{ clickable: true }}
+										scrollbar={{ draggable: true }}
+										autoplay={{
+											delay: 2500,
+											disableOnInteraction: false,
+										}}
+									>
+										{data.imagelist && data.imagelist.length > 1 ?
+											(data.imagelist.map((img, i) =>
+												<SwiperSlide key={i}>
+													<div className={styles.imageItem} key={i}>
+														<img className={styles.image} src={img} alt={`Destination ${i}`} />
+														<h4>{data.Destination.split(',')[i]}</h4>
+													</div>
+												</SwiperSlide>
+											)) : (
+												dest.map((location, i) =>
+													<SwiperSlide key={i}>
+														<div className={styles.imageItem} key={i}>
+															<img
+																className={styles.image}
+																src={images[location]}
+																alt={dest[location]}
+															/>
+															<h4>{location}</h4>
+														</div>
+													</SwiperSlide>
+												)
+											)
+										}
+									</Swiper>
+								}
+							</div>
+						</div>
+						<div className={styles.packageInfo}>
+							<div className={styles.itineraryContainer}>
+								<h2>Itinerary</h2>
+								<div className={styles.itinerary}>{data.itinerary || data1.itinerary}</div>
+							</div>
+							<div className={styles.introContainer}>
+								<div className={styles.intro}>
+									<h2>Introduction</h2>
+									<p>{data.intro}</p>
+								</div>
+								<button onClick={toggleExpand}>
+									{isExpanded ? "Hide All" : "Expand All"}
+								</button>
+								<div className={styles.days}>
+									{data && data.days && data.days.map((day, i) => (
+										<div key={i} className={styles.day}>
+											<div
+												style={{
+													display: "flex",
+													justifyContent: "space-between",
+													alignItems: "center",
+												}}
+											>
+												<h4>{day.title}</h4>
+												<button onClick={() => toggleDescription(i)}>
+													{expandedDays[i] ? (
+														<IoIosArrowUp />
+													) : (
+														<IoIosArrowDown />
+													)}
+												</button>
+											</div>
+											<p style={{ display: expandedDays[i] ? "block" : "none" }}>
+												{day.description}
+											</p>
+										</div>
+									))}
+								</div>
+							</div>
+						</div>
+						<div className={styles.includedContainer}>
+							<h2>What's Included</h2>
+							<button onClick={toggleExpand1}>
+								{isExpanded1 ? "Hide All" : "Expand All"}
+							</button>
+							<div className={styles.included}>
+								{included.map((item, i) => (
+									<div key={i} className={styles.includedItem}>
+										<div style={{ display: 'flex', gap: '10px' }}>
+											{item.isIncluded ? (
+												<FaCheckCircle style={{ color: 'green', fontSize: '24px' }} />
+											) : (
+												<FaTimesCircle style={{ color: 'red', fontSize: '24px' }} />
+											)}
+											<h4>{item.title}</h4>
+										</div>
+										<p style={{ display: isExpanded1 ? "block" : "none" }}>
+											{item.description}
 										</p>
 									</div>
 								))}
 							</div>
 						</div>
+						<br />
+						<br />
+						<br />
+						<MailList />
+						<br /><br />
+						<Footer />
 					</div>
-					<div className={styles.includedContainer}>
-						<h2>What's Included</h2>
-						<button onClick={toggleExpand1}>
-							{isExpanded1 ? "Hide All" : "Expand All"}
-						</button>
-						<div className={styles.included}>
-							{included.map((item, i) => (
-								<div key={i} className={styles.includedItem}>
-									<div style={{ display: 'flex', gap: '10px' }}>
-										{item.isIncluded ? (
-											<FaCheckCircle style={{ color: 'green', fontSize: '24px' }} />
-										) : (
-											<FaTimesCircle style={{ color: 'red', fontSize: '24px' }} />
-										)}
-										<h4>{item.title}</h4>
-									</div>
-									<p style={{ display: isExpanded1 ? "block" : "none" }}>
-										{item.description}
-									</p>
-								</div>
-							))}
-						</div>
-					</div>
-					<br />
-					<br />
-					<br />
-					<MailList />
-					<br /><br />
-					<Footer />
-				</div>
-			)}
-			{/* {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />} */}
-		</div>
-	);
+				)}
+				{/* {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />} */}
+			</div>
+		);
+	}
 };
 
 export default Package;

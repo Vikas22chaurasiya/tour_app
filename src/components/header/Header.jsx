@@ -19,7 +19,6 @@ import { Link } from "react-router-dom";
 const Header = ({ type }) => {
   const location = useLocation();
 
-  console.log(location.pathname);
   const [destination, setDestination] = useState("");
   const [home, sethome] = useState(false);
   const [packages, setpackages] = useState(false);
