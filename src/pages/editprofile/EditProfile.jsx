@@ -1,5 +1,4 @@
 import "./profile.css";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useState,useContext } from "react";
@@ -7,20 +6,26 @@ import { Link, useNavigate } from "react-router-dom";
 import {faFileArrowUp} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useFetch from "../../hooks/useFetch";
-
+import ReactDOM from 'react-dom';
 import { userInputs } from "../../formSource";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
 
+
 const EditProfile = () => {
   const { user } = useContext(AuthContext);
   const [files, setFiles] = useState("");
-  const [info, setInfo] = useState({});
+  const [info, setInfo] = useState({ username:user.username,email:user.email,phone:user.phone,city:user.city,country:user.country, preferences:{
+    destination:user.preferences.destination,
+    travelStyle:user.preferences.travelStyle,
+    price:user.preferences.price,
+    duration:user.preferences.duration
+  },img:""});
   const navigate = useNavigate()
   const user_id = user._id
   const { loading, error, dispatch } = useContext(AuthContext);
-  console.log(user)
+ 
 
 
   const handleChange = (e) => {
@@ -49,22 +54,28 @@ const EditProfile = () => {
         })
       );
 
+      console.log(info)
+
       const test = {
-        ...info,
+        username:info.username,email:info.email,phone:info.phone,city:info.city,country:info.country, preferences:{
+          destination:info.destination,
+          travelStyle:info.travelStyle,
+          price:info.price,
+          duration:info.duration
+        },
         img: list[0],
       };
 
-      console.log(test)
+      
 
       await axios.put(`http://localhost:8800/api/users/${user_id}`, test);
 
-      const user_new = await axios.get(`http://localhost:8800/api/users/${user_id}`);
+      const user_new = await axios.get(`${process.env.REACT_APP_LINK}/users/${user_id}`);
       dispatch({ type: "LOGIN_SUCCESS", payload: user_new.data });
       navigate('/')
     } catch (err) {console.log(err)}
   };
 
-  console.log(user)
 
   return (
     <div>
@@ -169,7 +180,7 @@ const EditProfile = () => {
                   <select
                     id="destination"
                     onChange={handleChange}
-                    defaultChecked={user.preferences ? user.preferences.destination : "2"}
+                    defaultValue={user.preferences ? user.preferences.destination : ""}
                     autoFocus={true}>
                     <option value="Agra">Agra</option>
                     <option value="New Delhi">New Delhi</option>
