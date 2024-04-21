@@ -72,7 +72,7 @@ const EditProfile = () => {
 
       const user_new = await axios.get(`${process.env.REACT_APP_LINK}/users/${user_id}`);
       dispatch({ type: "LOGIN_SUCCESS", payload: user_new.data });
-      navigate('/')
+      navigate('https://tour-app-its2.onrender.com/')
     } catch (err) {console.log(err)}
   };
 
