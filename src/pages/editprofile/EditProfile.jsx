@@ -68,7 +68,7 @@ const EditProfile = () => {
 
       
 
-      await axios.put(`http://localhost:8800/api/users/${user_id}`, test);
+      await axios.put(`${process.env.REACT_APP_LINK}/users/${user_id}`, test);
 
       const user_new = await axios.get(`${process.env.REACT_APP_LINK}/users/${user_id}`);
       dispatch({ type: "LOGIN_SUCCESS", payload: user_new.data });
