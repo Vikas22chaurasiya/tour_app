@@ -12,6 +12,9 @@ import RecList from "./pages/recommendation/List";
 import FavList from "./pages/favorites/List"
 import { AuthContext } from "./context/AuthContext";
 import RegistrationPage from "./pages/register/RegistrationPage";
+import Profile from "./pages/profile/Profile";
+import EditProfile from "./pages/editprofile/EditProfile";
+
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -25,6 +28,8 @@ function App() {
         <Route path="/allpackages" element={<AllList/>}/>
         <Route path="/recommendations" element={user?<RecList/>:<Login/>}/>
         <Route path="/favorites" element={user?<FavList/>:<Login/>}/>
+        <Route path="/profile" element={user?<Profile/>:<Login/>}/>
+        <Route path="/editprofile" element={user?<EditProfile/>:<Login/>}/>
       </Routes>
     </BrowserRouter>
   );

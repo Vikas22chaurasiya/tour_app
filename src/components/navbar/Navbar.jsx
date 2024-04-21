@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-
+import {faUser} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Navbar = () => {
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate()
@@ -29,6 +30,9 @@ const Navbar = () => {
         {user ? <div className="navItems">
           <span className="navButtonname">Welcome {user.username} </span>
           <button className="navButton" onClick={handleClick}>Logout</button>
+          <Link to="/editprofile" style={{ color: "inherit", textDecoration: "none" }}>
+          <span className="navButton"><FontAwesomeIcon icon={faUser} /> Profile</span>
+          </Link>
         </div> : (
           <div className="navItems">
             <Link to="/register" style={{ color: "inherit", textDecoration: "none" }}>
