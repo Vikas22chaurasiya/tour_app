@@ -16,7 +16,7 @@ import axios from "axios";
 const EditProfile = () => {
   const { user } = useContext(AuthContext);
   const [files, setFiles] = useState("");
-  const [info, setInfo] = useState({ username:user.username,email:user.email,phone:user.phone,city:user.city,country:user.country, preferences:{
+  const [info, setInfo] = useState({ username:user.username,email:user.email,phone:user.phone,city:user.city,country:user.country, destination:user.preferences ? user.preferences.destination:"Agra",travelStyle:user.preferences?user.preferences.travelStyle:"Explorer",price:user.preferences? user.preferences.price : "50000",duration:user.preferences?user.preferences.duration:"15",preferences:{
     destination:user.preferences.destination,
     travelStyle:user.preferences.travelStyle,
     price:user.preferences.price,
@@ -56,11 +56,11 @@ const EditProfile = () => {
 
       console.log(info)
 
-      const test = {
+     const test = {
         username:info.username,email:info.email,phone:info.phone,city:info.city,country:info.country, preferences:{
           destination:info.destination,
           travelStyle:info.travelStyle,
-          price:info.price,
+          price: info.price,
           duration:info.duration
         },
         img: list[0],
@@ -69,9 +69,9 @@ const EditProfile = () => {
       
 
       await axios.put(`${process.env.REACT_APP_LINK}/users/${user_id}`, test);
-
+      const data_new = {...test,_id:user_id}
       const user_new = await axios.get(`${process.env.REACT_APP_LINK}/users/${user_id}`);
-      dispatch({ type: "LOGIN_SUCCESS", payload: user_new.data });
+      dispatch({ type: "LOGIN_SUCCESS", payload: data_new});
       navigate('/')
     } catch (err) {console.log(err)}
   };
